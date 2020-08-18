@@ -196,28 +196,28 @@ def evualate_preds(y_true, y_preds):
 
 # Normalizing continuous variables
 
-from sklearn.preprocessing import MinMaxScaler
+# from sklearn.preprocessing import MinMaxScaler
 
-scaler = MinMaxScaler(feature_range = (0,1))
+# scaler = MinMaxScaler(feature_range = (0,1))
 
 
 
 #initializing our training and test data
 X_train, X_test, y_train, y_test = train_test_split(X,y, test_size = 0.2)
 
-clf = LogisticRegression(max_iter = 1500)
-scaler.fit(X_train)
-X_train = scaler.fit_transform(X_train)
-X_test = scaler.fit_transform(X_test)
+model = LogisticRegression(max_iter = 1500)
+# scaler.fit(X_train)
+# X_train = scaler.fit_transform(X_train)
+# X_test = scaler.fit_transform(X_test)
 
 #checking for patterns in our training data
-clf.fit(X_train, y_train)
+model.fit(X_train, y_train)
 #checking how good our model is 
-clf.score(X_test, y_test)
+model.score(X_test, y_test)
 
 #
 
-rs_y_preds = clf.predict(X_test)
+rs_y_preds = model.predict(X_test)
 
 rs_metrics =  evualate_preds(y_test, rs_y_preds)
 
@@ -245,7 +245,7 @@ rs_metrics =  evualate_preds(y_test, rs_y_preds)
 import pickle 
 
 #saving an existing model to file 
-pickle.dump(clf, open("model.pkl", "wb"))
+pickle.dump(model, open("model.pkl", "wb"))
 
 
 # In[123]:
