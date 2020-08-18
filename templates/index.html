@@ -13,6 +13,8 @@
     <div class="container">
         <h1> Diabetics Prediction </h1>
 
+        <h6> Predict the probability of being diabetic </h6>
+
         {% if success %}
 
         <h3> Age: {{age}} </h3>
@@ -23,6 +25,7 @@
 
         <h3> Glucose Level {{glu}} </h3>
 
+        <h1> Prediction {{pred}}</h1>
 
         {% else %}
         <form method="POST">
