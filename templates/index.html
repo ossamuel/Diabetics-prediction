@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diabetics Prediction</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="container">
+        <h1> Diabetics Prediction </h1>
+
+        {% if success %}
+
+        <h3> Age: {{age}} </h3>
+
+        <h3> Body Mass Index: {{bmi}} </h3>
+
+        <h3> Blood Pressure: {{bp}} </h3>
+
+        <h3> Glucose Level {{glu}} </h3>
+
+
+        {% else %}
+        <form method="POST">
+
+            <div class="form-group">
+                <label for="age">Age</label>
+                <input name="age" type="number" class="form-control" id="age">
+            </div>
+
+            <div class="form-group">
+                <label for="bmi">Body Mass Index</label>
+                <input name="bmi" type="number" class="form-control" id="bmi">
+            </div>
+
+            <div class="form-group">
+                <label for="bp">Blood Pressure</label>
+                <input name="bp" type="number" class="form-control" id="bp" aria-describedby="bpH">
+                <small id="bpH" class="form-text text-muted">mmHg</small>
+            </div>
+
+            <!-- <div class="form-group">
+                <label for="dbf">Diabetes Pedigree Function</label>
+                <input type="number" class="form-control" id="dbf" aria-describedby="dbfH">
+                <small id="dbfH" class="form-text text-muted">A function that scores the likehood of diabetes based on family history</small>
+            
+            </div> -->
+
+            <div class="form-group">
+                <label for="glu">Glucose Level</label>
+                <input name="glu" type="number" class="form-control" id="glu" aria-describedby="gluH">
+                <small id="gluH" class="form-text text-muted">Concentration of glucose present in the blood of humans</small>
+            </div>
+
+            <!-- <div class="form-group">
+                <label for="glu">Insulin</label>
+                <input type="number" class="form-control" id="glu" aria-describedby="gluH">
+                <small id="gluH" class="form-text text-muted">2-Hour serum insulin (mu U/ml)</small>
+                
+            </div>
+
+            <div class="form-group">
+                <label for="pr">Pregnancies</label>
+                <input type="pr" class="form-control" id="prH">
+                <small id="prH" class="form-text text-muted"># of times</small>
+            </div>
+
+            <div class="form-group">
+                <label for="sk">Skin Thickness</label>
+                <input type="number" class="form-control" id="skH">
+                <small id="skH" class="form-text text-muted">Triceps skin fold thickness (mm)</small>
+
+            </div> -->
+    
+
+
+    
+
+
+
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+        {% endif %}
+    </div>
+</body>
+
+</html>
