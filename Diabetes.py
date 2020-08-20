@@ -51,6 +51,8 @@
 
 import pandas as pd 
 import numpy as np 
+import pickle 
+
 diabetes = pd.read_csv('diabetes_1.csv')
 #x includes every single column aside from Outcome (what we are trying to predict)
 X = diabetes.drop('Outcome', axis = 1)
@@ -59,7 +61,7 @@ y = diabetes["Outcome"]
 
 #checking to see if every column in data frame is all numerical before moving on 
 #returns True if all column is Numeric 
-diabetes.shape[1] == diabetes.select_dtypes(include=np.number).shape[1]
+# diabetes.shape[1] == diabetes.select_dtypes(include=np.number).shape[1]
 
 
 # Data is all Numerical - so we can move to the next step
@@ -85,20 +87,22 @@ diabetes.shape[1] == diabetes.select_dtypes(include=np.number).shape[1]
 
 
 #plot histogram for each numerical attribute  
-get_ipython().run_line_magic('matplotlib', 'inline')
-import matplotlib.pyplot as plt
-diabetes.hist(bins=50, figsize=(20,15))
-plt.show()
+
+# get_ipython().run_line_magic('matplotlib', 'inline')
+# import matplotlib.pyplot as plt
+# diabetes.hist(bins=50, figsize=(20,15))
+# plt.show()
 
 
 # In[48]:
 
 
 #we are going to check for any missing values in our data 
-if all(diabetes.isna().sum()) == 0:
-    print('True')
-else: 
-    print('False')
+
+# if all(diabetes.isna().sum()) == 0:
+#     print('True')
+# else: 
+#     print('False')
 
 
 # In[19]:
@@ -213,13 +217,13 @@ model = LogisticRegression(max_iter = 1500)
 #checking for patterns in our training data
 model.fit(X_train, y_train)
 #checking how good our model is 
-model.score(X_test, y_test)
+# model.score(X_test, y_test)
 
-#
+# #
 
-rs_y_preds = model.predict(X_test)
+# rs_y_preds = model.predict(X_test)
 
-rs_metrics =  evualate_preds(y_test, rs_y_preds)
+# rs_metrics =  evualate_preds(y_test, rs_y_preds)
 
 
 
@@ -242,7 +246,7 @@ rs_metrics =  evualate_preds(y_test, rs_y_preds)
 
 
 
-import pickle 
+
 
 #saving an existing model to file 
 pickle.dump(model, open("model.pkl", "wb"))
@@ -259,99 +263,99 @@ loaded_pickle_model = pickle.load(open("model.pkl", "rb"))
 # evualate_preds(y_test, pickle_y_preds)
 
 
-# # FINE TUNING SYSTEM
-# 	
-# 
+# # # FINE TUNING SYSTEM
+# # 	
+# # 
 
-# (A): Trying various Parameters to see if model can be improved and best parameters possible
-# 
-#     1: RandomizedSearchCv
-#     2: GridSearchCv
+# # (A): Trying various Parameters to see if model can be improved and best parameters possible
+# # 
+# #     1: RandomizedSearchCv
+# #     2: GridSearchCv
 
-# # 1. Random Search
+# # # 1. Random Search
 
-# In[61]:
-
-
-#1: 
-from scipy.stats import uniform as sp_random
-from sklearn.model_selection import RandomizedSearchCV
-grid = {"class_weight":  ['balanced'], 
-        "solver": ["liblinear", "sag", "saga", "newton-cg"],
-        "intercept_scaling": sp_random() 
-        }
+# # In[61]:
 
 
-np.random.seed(42)
-
-x = diabetes.drop('Outcome', axis = 1)
-y = diabetes['Outcome']
-X_train, X_test, y_train, y_test = train_test_split(x,y, test_size = 0.2)
-
-clp = LogisticRegression(n_jobs = 1)
-
-rs_clp = RandomizedSearchCV(estimator = clp, param_distributions = grid, n_iter = 10, #number of model to try
-                            cv = 5, verbose = 2)
-
-rs_clp.fit(X_train, y_train)
+# #1: 
+# from scipy.stats import uniform as sp_random
+# from sklearn.model_selection import RandomizedSearchCV
+# grid = {"class_weight":  ['balanced'], 
+#         "solver": ["liblinear", "sag", "saga", "newton-cg"],
+#         "intercept_scaling": sp_random() 
+#         }
 
 
+# np.random.seed(42)
+
+# x = diabetes.drop('Outcome', axis = 1)
+# y = diabetes['Outcome']
+# X_train, X_test, y_train, y_test = train_test_split(x,y, test_size = 0.2)
+
+# clp = LogisticRegression(n_jobs = 1)
+
+# rs_clp = RandomizedSearchCV(estimator = clp, param_distributions = grid, n_iter = 10, #number of model to try
+#                             cv = 5, verbose = 2)
+
+# rs_clp.fit(X_train, y_train)
 
 
-# In[68]:
 
 
-print(rs_clp.best_score_)
-print(rs_clp.best_params_)
-#testing the best fit 
-print(rs_clp.score(X_test, y_test))
+# # In[68]:
 
 
-# In[63]:
+# print(rs_clp.best_score_)
+# print(rs_clp.best_params_)
+# #testing the best fit 
+# print(rs_clp.score(X_test, y_test))
 
 
-rs_y_preds = rs_clp.predict(X_test)
-
-rs_metrics =  evualate_preds(y_test, rs_y_preds)
+# # In[63]:
 
 
-# # Grid search
+# rs_y_preds = rs_clp.predict(X_test)
 
-# In[65]:
-
-
-grid_2 = {"class_weight":  ['balanced'], 
-        "solver": ["liblinear","newton-cg"],
-        "intercept_scaling": [2.5, 5.8, 7.9],
-        "C": [0.001,0.01,0.1,1,1.4, 3.5, 6.4,10,100,1000]}
-
-from sklearn.model_selection import GridSearchCV
-
-np.random.seed(42)
+# rs_metrics =  evualate_preds(y_test, rs_y_preds)
 
 
-x = diabetes.drop('Outcome', axis = 1)
-y = diabetes['Outcome']
-X_train, X_test, y_train, y_test = train_test_split(x,y, test_size = 0.2)
+# # # Grid search
 
-clp = LogisticRegression(n_jobs = 1)
-
-gs_clp = GridSearchCV(estimator = clp, param_grid = grid_2, #number of model to try
-                            cv = 5, verbose = 2)
-
-gs_clp.fit(X_train, y_train)
+# # In[65]:
 
 
-# In[71]:
+# grid_2 = {"class_weight":  ['balanced'], 
+#         "solver": ["liblinear","newton-cg"],
+#         "intercept_scaling": [2.5, 5.8, 7.9],
+#         "C": [0.001,0.01,0.1,1,1.4, 3.5, 6.4,10,100,1000]}
+
+# from sklearn.model_selection import GridSearchCV
+
+# np.random.seed(42)
 
 
-print(gs_clp.best_score_)
-print(gs_clp.best_params_)
-#testing the best fit 
-print(gs_clp.score(X_test, y_test))
-gs_y_preds = gs_clp.predict(X_test)
+# x = diabetes.drop('Outcome', axis = 1)
+# y = diabetes['Outcome']
+# X_train, X_test, y_train, y_test = train_test_split(x,y, test_size = 0.2)
 
-gs_metrics =  evualate_preds(y_test, rs_y_preds)
+# clp = LogisticRegression(n_jobs = 1)
+
+# gs_clp = GridSearchCV(estimator = clp, param_grid = grid_2, #number of model to try
+#                             cv = 5, verbose = 2)
+
+# gs_clp.fit(X_train, y_train)
+
+
+# # In[71]:
+
+
+# print(gs_clp.best_score_)
+# print(gs_clp.best_params_)
+# #testing the best fit 
+# print(gs_clp.score(X_test, y_test))
+# gs_y_preds = gs_clp.predict(X_test)
+
+# gs_metrics =  evualate_preds(y_test, rs_y_preds)
 
 
 # # PRESENT SOLUTION:
