@@ -14,7 +14,10 @@ model = pickle.load(open('model.pkl', 'rb'))
 @app.route('/', methods=["GET", "POST"])
 def main():
     if request.method == "POST":
-        
+        glu = request.form["glu"]
+        bp = request.form["bp"]
+        bmi = request.form["bmi"]
+        age = request.form["age"]
         int_features = [int(float(x)) for x in request.form.values()]
         final = [np.array(int_features)]
         print(final)
