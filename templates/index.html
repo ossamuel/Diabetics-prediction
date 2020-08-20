@@ -7,25 +7,103 @@
     <title>Diabetics Prediction</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
         integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-</head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='custom.css') }}">
+    </head>
 
 <body>
+
+    <!-- As a heading -->
+    <nav class="navbar navbar-light bg-light">
+    <span class="navbar-brand mb-0 h1">Diabetics Prediction</span>
+    </nav>
+
     <div class="container">
-        <h1> Diabetics Prediction </h1>
+
+        <br>
+        <!-- <h1> Diabetics Prediction </h1> -->
 
         <h6> Predict the probability of being diabetic </h6>
 
         {% if success %}
 
-        <h3> Age: {{age}} </h3>
+      
+        <div class="card-deck">
 
-        <h3> Body Mass Index: {{bmi}} </h3>
+            <!-- <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title"></h5>
+                </div>
+            </div> -->
 
-        <h3> Blood Pressure: {{bp}} </h3>
+            <div class="card">
+                <div class="card-header">
+                    Age
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">{{age}}</h5>
+                </div>
+              </div>
 
-        <h3> Glucose Level {{glu}} </h3>
+              <div class="card">
+                <div class="card-header">
+                    Body Mass Index
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">{{bmi}}</h5>
+                </div>
+              </div>
 
-        <h1> Prediction {{pred}}</h1>
+              <div class="card">
+                <div class="card-header">
+                    Blood Pressure
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">{{bp}}</h5>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-header">
+                    Glucose Level
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">{{glu}}</h5>
+                </div>
+              </div>
+
+
+
+            <!-- <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title">  </h5>
+                </div>
+            </div>
+
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title">  </h5>
+                </div>
+            </div>
+
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title">  </h5>
+                </div>
+            </div> -->
+
+
+        </div>
+
+        <br>
+
+        <div class="card">
+            <div class="card-header">
+                Prediction
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">{{predict_text}}</h5>
+            </div>
+          </div>
 
         {% else %}
         <form method="POST">
@@ -33,28 +111,29 @@
             <div class="form-group">
                 <label for="glu">Glucose Level</label>
                 <input name="glu" type="number" class="form-control" id="glu" aria-describedby="gluH">
-                <small id="gluH" class="form-text text-muted">Concentration of glucose present in the blood of humans</small>
+                <small id="gluH" class="form-text text-muted">Concentration of glucose present in the blood of
+                    humans</small>
             </div>
 
             <div class="form-group">
                 <label for="bp">Blood Pressure</label>
-                <input name="bp" type="number" class="form-control" id="bp" step = "any" aria-describedby="bpH">
+                <input name="bp" type="number" class="form-control" id="bp" step="any" aria-describedby="bpH">
                 <small id="bpH" class="form-text text-muted">mmHg</small>
             </div>
 
             <div class="form-group">
                 <label for="bmi">Body Mass Index</label>
-                <input name="bmi" type="number" class="form-control" id="bmi" step = "any">
+                <input name="bmi" type="number" class="form-control" id="bmi" step="any">
             </div>
-            
+
             <div class="form-group">
                 <label for="age">Age</label>
                 <input name="age" type="number" class="form-control" id="age">
             </div>
 
-            
 
-            
+
+
 
             <!-- <div class="form-group">
                 <label for="dbf">Diabetes Pedigree Function</label>
@@ -63,7 +142,7 @@
             
             </div> -->
 
-            
+
 
             <!-- <div class="form-group">
                 <label for="glu">Insulin</label>
@@ -81,10 +160,10 @@
                 <input type="number" class="form-control" id="skH">
                 <small id="skH" class="form-text text-muted">Triceps skin fold thickness (mm)</small>
             </div> -->
-    
 
 
-    
+
+
 
 
 
@@ -94,6 +173,16 @@
 
         {% endif %}
     </div>
+
+    <footer class="footer">
+        <div class="container">
+          <span class="text-muted">Made by <a href="https://github.com/jmonteza">Justin Monteza</a> and <a href="https://github.com/ossamuel">Ogo Samuel</a></span>
+        </div>
+      </footer>
+  
+
+    
+
 </body>
 
 </html>

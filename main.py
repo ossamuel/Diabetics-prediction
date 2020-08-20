@@ -10,7 +10,9 @@ print("Files in %r: %s" % (cwd, files))
 
 app = Flask(__name__)
 
-model = pickle.load(open('model.pkl', 'rb'))
+# model = pickle.load(open('model.pkl', 'rb'))
+model = pickle.load(open('diabetic_clf_model.plk', 'rb'))
+
 @app.route('/', methods=["GET", "POST"])
 def main():
     if request.method == "POST":
@@ -23,7 +25,7 @@ def main():
         print(final)
         prediction = model.predict_proba(final)
         
-        return render_template('index.html', success=True, predict_text = 'your probability of being diabetic is  {} '.format(prediction[0][1]))
+        return render_template('index.html', success=True, glu=glu, age=age, bmi=bmi, bp=bp, predict_text = 'Your probability of being diabetic is  {} '.format(prediction))
     else:
         return render_template('index.html', success=False)
 
