@@ -14,9 +14,9 @@ def main():
         bp = request.form["bp"]
         glu = request.form["glu"]
 
-        int_features = [int(x) for x in request.form.values()]
+        int_features = [int(float(x)) for x in request.form.values()]
         final = [np.array(int_features)]
-        prediction = model.predict_proba(final)
+        prediction = model.predict(final)
         
         return render_template('index.html', success=True, age=age, bmi=bmi, bp=bp, glu=glu, pred=prediction)
     else:
